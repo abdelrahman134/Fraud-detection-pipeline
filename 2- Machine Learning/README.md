@@ -35,7 +35,7 @@
 
 ### Data Source & ML Mechanism
 - **Data Source**: Credit card transaction stream generated via Kafka using [Sparkov_Data_Generation
-](https://github.com/namebrandon/Sparkov_Data_Generation.git) stored in AWS S3 Bucket as Parquet. check [/Data_Sample](https://github.com/abdelrahman134/Fraud-detection-pipeline/tree/ce2c3a0a82bd9020f6794fd89f366c75a9685235/2-%20Machine%20Learning/Data%20Sample)
+](https://github.com/namebrandon/Sparkov_Data_Generation.git) stored in AWS S3 Bucket as Parquet. check [Data_Sample](https://github.com/abdelrahman134/Fraud-detection-pipeline/tree/ce2c3a0a82bd9020f6794fd89f366c75a9685235/2-%20Machine%20Learning/Data%20Sample)
 - **data contain** : cardholder demographics, timestamps, geo-coordinates (`lat`/`long`), merchant info, transaction amount (`amt`), and historical fraud labels.
 
 <p align="center">
@@ -82,19 +82,19 @@ is_fraud      : 0                                        >>>> is it F?
 
 | Module | Function | Description |
 | :--- | :--- | :--- |
-| [static_features.py](file:///g:/CS/ITI/DM%209M%20%28ismalia%29/Ptoject/ITI/fraud/aws_proj/bricks/Databricks%20run/src/features/static_features.py) | `build_static_features(df)` | Casts raw column types, builds timestamp, extracts temporal features (`hour`, `day_of_week`, `month`), and calculates Euclidean distance. |
-| [geospatial_features.py](file:///g:/CS/ITI/DM%209M%20%28ismalia%29/Ptoject/ITI/fraud/aws_proj/bricks/Databricks%20run/src/features/geospatial_features.py) | `build_geospatial_features(df)` | Computes Haversine great-circle distance (in km) between customer and merchant location. |
-| [window_features.py](file:///g:/CS/ITI/DM%209M%20%28ismalia%29/Ptoject/ITI/fraud/aws_proj/bricks/Databricks%20run/src/features/window_features.py) | `build_window_features(df)` | Computes rolling 1h/24h transaction counts, 24h spend totals/averages, unique merchants, and time elapsed since previous transaction per credit card (`cc_num`). |
-| [lookup_features.py](file:///g:/CS/ITI/DM%209M%20%28ismalia%29/Ptoject/ITI/fraud/aws_proj/bricks/Databricks%20run/src/features/lookup_features.py) | `build_lookup_features(df, train_df)` | Target encodes category, merchant, and state risk levels by computing historical fraud rates on training data and left-joining them. |
+| [static_features.py](https://github.com/Mo-Khaled-Ibrahim/Faud_Detection_ML/tree/ed44df6392390599b6cca1d97127f581d1b276a7/src/features/static_features.py) | `build_static_features(df)` | Casts raw column types, builds timestamp, extracts temporal features (`hour`, `day_of_week`, `month`), and calculates Euclidean distance. |
+| [geospatial_features.py](https://github.com/Mo-Khaled-Ibrahim/Faud_Detection_ML/tree/ed44df6392390599b6cca1d97127f581d1b276a7/src/features/geospatial_features.py) | `build_geospatial_features(df)` | Computes Haversine great-circle distance (in km) between customer and merchant location. |
+| [window_features.py](https://github.com/Mo-Khaled-Ibrahim/Faud_Detection_ML/tree/ed44df6392390599b6cca1d97127f581d1b276a7/src/features/window_features.py) | `build_window_features(df)` | Computes rolling 1h/24h transaction counts, 24h spend totals/averages, unique merchants, and time elapsed since previous transaction per credit card (`cc_num`). |
+| [lookup_features.py](https://github.com/Mo-Khaled-Ibrahim/Faud_Detection_ML/tree/ed44df6392390599b6cca1d97127f581d1b276a7/src/features/lookup_features.py) | `build_lookup_features(df, train_df)` | Target encodes category, merchant, and state risk levels by computing historical fraud rates on training data and left-joining them. |
 
 ### 2. Model Logic (`src/model/`)
 
 | Module | Function | Description |
 | :--- | :--- | :--- |
-| [train.py](file:///g:/CS/ITI/DM%209M%20%28ismalia%29/Ptoject/ITI/fraud/aws_proj/bricks/Databricks%20run/src/model/train.py) | `train_model(X_train, y_train, X_val, y_val, model_params)` | Prepares CatBoost Pools with categorical columns, configures validation early stopping, and fits the classifier. |
-| [evaluate.py](file:///g:/CS/ITI/DM%209M%20%28ismalia%29/Ptoject/ITI/fraud/aws_proj/bricks/Databricks%20run/src/model/evaluate.py) | `evaluate_model(model, X_test, y_test, threshold)` | Computes ROC-AUC, Precision, Recall, F1-Score, and Confusion Matrix at a given cutoff. |
-| [threshold.py](file:///g:/CS/ITI/DM%209M%20%28ismalia%29/Ptoject/ITI/fraud/aws_proj/bricks/Databricks%20run/src/model/threshold.py) | `find_best_threshold(model, X_val, y_val)` | Sweeps probability space using `TimeSeriesSplit` cross-validation to maximize F1-score. |
-| [shap_explainer.py](file:///g:/CS/ITI/DM%209M%20%28ismalia%29/Ptoject/ITI/fraud/aws_proj/bricks/Databricks%20run/src/model/shap_explainer.py) | `compute_shap_reasons(model, X)` | Computes SHAP values via `TreeExplainer` for model interpretability. |
+| [train.py](https://github.com/Mo-Khaled-Ibrahim/Faud_Detection_ML/tree/ed44df6392390599b6cca1d97127f581d1b276a7/src/model/train.py) | `train_model(X_train, y_train, X_val, y_val, model_params)` | Prepares CatBoost Pools with categorical columns, configures validation early stopping, and fits the classifier. |
+| [evaluate.py](https://github.com/Mo-Khaled-Ibrahim/Faud_Detection_ML/tree/ed44df6392390599b6cca1d97127f581d1b276a7/src/model/evaluate.py) | `evaluate_model(model, X_test, y_test, threshold)` | Computes ROC-AUC, Precision, Recall, F1-Score, and Confusion Matrix at a given cutoff. |
+| [threshold.py](https://github.com/Mo-Khaled-Ibrahim/Faud_Detection_ML/tree/ed44df6392390599b6cca1d97127f581d1b276a7/src/model/threshold.py) | `find_best_threshold(model, X_val, y_val)` | Sweeps probability space using `TimeSeriesSplit` cross-validation to maximize F1-score. |
+| [shap_explainer.py](https://github.com/Mo-Khaled-Ibrahim/Faud_Detection_ML/tree/ed44df6392390599b6cca1d97127f581d1b276a7/src/model/shap_explainer.py) | `compute_shap_reasons(model, X)` | Computes SHAP values via `TreeExplainer` for model interpretability. |
 
 ---
 
@@ -102,8 +102,7 @@ is_fraud      : 0                                        >>>> is it F?
 
 The pipeline runs via two decoupled Databricks Jobs:
 
-### Job 1: Scheduled Weekly Retraining
-- **File**: `src/retraining/weekly_retrain.py`
+### Job 1: Scheduled [weekly_retrain](src/retraining/weekly_retrain.py)
 - **Schedule**: Weekly Cron (e.g. Every Sunday at 02:00 AM)
 - **What it does**: 
   1. Loads historical data and executes `build_static_features`, `build_window_features`, `build_geospatial_features`, and `build_lookup_features`.
@@ -112,9 +111,8 @@ The pipeline runs via two decoupled Databricks Jobs:
   4. Evaluates performance against test set and logs metrics/confusion matrix to MLflow.
   5. Registers and promotes the model in **MLflow Model Registry** under `fraud_detection_catboost`.
 
-### Job 2: 24/7 Real-Time Detection
-- **File**: `src/scoring/realtime_detection.py`
-- **Schedule**: Continuous PySpark Streaming (24/7)
+### Job 2: 24/7 [realtime_detection](src/scoring/realtime_detection.py)
+- **Listen**: Continuous PySpark Streaming (24/7)
 - **What it does**:
   1. Listens continuously to incoming raw transaction parquet files landing on S3 via `spark.readStream`.
   2. Applies feature engineering pipeline on incoming stream.
@@ -130,7 +128,7 @@ The pipeline runs via two decoupled Databricks Jobs:
 
 ---
 
-## Architecture & Execution Phases
+## Architecture & Execution 
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
