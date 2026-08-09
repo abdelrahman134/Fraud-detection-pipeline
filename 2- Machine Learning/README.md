@@ -62,7 +62,7 @@ is_fraud      : 0                                        >>>> is it F?
 
 - **Inference Mechanism**: Real-time transactions are transformed on arrival, scored via PySpark MLflow UDF, and flagged as fraud when probability meets or exceeds the **0.9980** threshold.
 
-#### 📌 **Key Experimental Findings (`notebooks/`)**:
+#### 📌 **Key Experimental Findings ([Notebooks](/notebooks/))**:
 > Systematic trial runs evaluated SMOTENC vs. native class weighting. The **winning configuration** locked into production is:
 
 - **CatBoost Parameters**: 
@@ -78,7 +78,7 @@ is_fraud      : 0                                        >>>> is it F?
 
 ## ⚙️ Core Functions Reference
 
-### 1. Feature Engineering (`src/features/`)
+### 1. Feature Engineering ([features](src/features/))
 
 | Module | Function | Description |
 | :--- | :--- | :--- |
@@ -87,7 +87,7 @@ is_fraud      : 0                                        >>>> is it F?
 | [window_features.py](https://github.com/Mo-Khaled-Ibrahim/Faud_Detection_ML/tree/ed44df6392390599b6cca1d97127f581d1b276a7/src/features/window_features.py) | `build_window_features(df)` | Computes rolling 1h/24h transaction counts, 24h spend totals/averages, unique merchants, and time elapsed since previous transaction per credit card (`cc_num`). |
 | [lookup_features.py](https://github.com/Mo-Khaled-Ibrahim/Faud_Detection_ML/tree/ed44df6392390599b6cca1d97127f581d1b276a7/src/features/lookup_features.py) | `build_lookup_features(df, train_df)` | Target encodes category, merchant, and state risk levels by computing historical fraud rates on training data and left-joining them. |
 
-### 2. Model Logic (`src/model/`)
+### 2. Model Logic ([model](src/model/))
 
 | Module | Function | Description |
 | :--- | :--- | :--- |
