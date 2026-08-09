@@ -2,56 +2,6 @@
 
 ---
 
-## Architecture & Execution Phases
-
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                             DATABRICKS CLOUD                                │
-│                                                                             │
-│  [ PHASE 1: REAL-TIME DETECTION (24/7 Continuous Streaming) ]               │
-│  S3 Raw Bucket ──► PySpark Structured Streaming ──► Feature Engineering     │
-│                                                           │                 │
-│  Alert Output ◄── Cutoff Threshold (>= 0.9980) ◄── MLflow Model UDF        │
-│                                                                             │
-│  ─────────────────────────────────────────────────────────────────────────  │
-│                                                                             │
-│  [ PHASE 2: WEEKLY MODEL RETRAINING (Scheduled Batch Workflow) ]             │
-│  Historical Delta/S3 ──► Feature Pipeline ──► CatBoost Train ──► MLflow     │
-│                                                                     │       │
-│  MLflow Registry ("Production") ◄───────────────────────────────────┘       │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
-
-### Data Source & ML Mechanism
-- **Data Source**: Credit card transaction stream generated via Kafka using [Sparkov_Data_Generation
-](https://github.com/namebrandon/Sparkov_Data_Generation.git), containing cardholder demographics, timestamps, geo-coordinates (`lat`/`long`), merchant info, transaction amount (`amt`), and historical fraud labels.
-
-<p align="center">
-  <img src="pics/data_over.png" alt="1" width="1000"/>
-</p>
-
-```
-timestamp     : 2024-01-02 03:19:49                      >>>> when
-cc_num + coordinates    : 06040191765 + lat/long         >>>> who + Where H 
-amt           : 34.46                                    >>>> Much?
-category      : grocery_pos                              >>>> What?
-merchant + coordinates : Swaniawski Inc + lat/long       >>>> Where T
-is_fraud      : 0                                        >>>> is it F?
-```
-
-#### Pattern of Transaction / holder
-- Time (day & hour / velocity) 
-- Amount (recent / historical spending)
-- Distance
-- Online vs POS
-- Merchant fraud before? (how many transaction to unique merchant)
-
-- **ML Engine**: **CatBoost Classifier** trained on **20 engineered features** (spatial, velocity, static, and historical risk lookup rates).
-
-- **Inference Mechanism**: Real-time transactions are transformed on arrival, scored via PySpark MLflow UDF, and flagged as fraud when probability meets or exceeds the **0.9980** threshold.
-
----
-
 ## Repository Directory Structure
 
 ```
@@ -81,7 +31,37 @@ Databricks run/
 └── README.md                         # Project documentation
 ```
 
-> 📌 **Key Experimental Findings (`notebooks/`)**:
+---
+
+### Data Source & ML Mechanism
+- **Data Source**: Credit card transaction stream generated via Kafka using [Sparkov_Data_Generation
+](https://github.com/namebrandon/Sparkov_Data_Generation.git) stored in AWS S3 Bucket as Parquet. containing cardholder demographics, timestamps, geo-coordinates (`lat`/`long`), merchant info, transaction amount (`amt`), and historical fraud labels.
+
+<p align="center">
+  <img src="/pics/data_over.png" alt="1" width="1000"/>
+</p>
+
+```
+timestamp     : 2024-01-02 03:19:49                      >>>> when
+cc_num + coordinates    : 06040191765 + lat/long         >>>> who + Where H 
+amt           : 34.46                                    >>>> Much?
+category      : grocery_pos                              >>>> What?
+merchant + coordinates : Swaniawski Inc + lat/long       >>>> Where T
+is_fraud      : 0                                        >>>> is it F?
+```
+
+#### Pattern of Transaction / holder
+- Time (day & hour / velocity) 
+- Amount (recent / historical spending)
+- Distance
+- Online vs POS
+- Merchant fraud before? (how many transaction to unique merchant)
+
+- **ML Engine**: **CatBoost Classifier** trained on **20 engineered features** (spatial, velocity, static, and historical risk lookup rates).
+
+- **Inference Mechanism**: Real-time transactions are transformed on arrival, scored via PySpark MLflow UDF, and flagged as fraud when probability meets or exceeds the **0.9980** threshold.
+
+#### 📌 **Key Experimental Findings (`notebooks/`)**:
 > Systematic trial runs evaluated SMOTENC vs. native class weighting. The **winning configuration** locked into production is:
 
 - **CatBoost Parameters**: 
@@ -146,5 +126,27 @@ The pipeline runs via two decoupled Databricks Jobs:
 <p align="center">
   <img src="pics/detect_sample.png" alt="Image" width="300">
 </p>
+
+---
+
+## Architecture & Execution Phases
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                             DATABRICKS CLOUD                                │
+│                                                                             │
+│  [ 1: REAL-TIME DETECTION (24/7 Continuous Streaming) ]               │
+│  S3 Raw Bucket ──► PySpark Structured Streaming ──► Feature Engineering     │
+│                                                           │                 │
+│  Alert Output ◄── Cutoff Threshold (>= 0.9980) ◄── MLflow Model UDF        │
+│                                                                             │
+│  ─────────────────────────────────────────────────────────────────────────  │
+│                                                                             │
+│  [ 2: WEEKLY MODEL RETRAINING (Scheduled Batch Workflow) ]             │
+│  Historical Delta/S3 ──► Feature Pipeline ──► CatBoost Train ──► MLflow     │
+│                                                                     │       │
+│  MLflow Registry ("Production") ◄───────────────────────────────────┘       │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
 
 ---
