@@ -62,7 +62,7 @@ is_fraud      : 0                                        >>>> is it F?
 
 - **Inference Mechanism**: Real-time transactions are transformed on arrival, scored via PySpark MLflow UDF, and flagged as fraud when probability meets or exceeds the **0.9980** threshold.
 
-#### 📌 **Key Experimental Findings ([Notebooks]([/notebooks/](https://github.com/abdelrahman134/Fraud-detection-pipeline/tree/b4c623a376204a4e59333cef017c6cccddd390cc/2-%20Machine%20Learning/notebooks))**:
+#### 📌 **Key Experimental Findings [(Notebooks)](https://github.com/abdelrahman134/Fraud-detection-pipeline/tree/b4c623a376204a4e59333cef017c6cccddd390cc/2-%20Machine%20Learning/notebooks)**:
 > Systematic trial runs evaluated SMOTENC vs. native class weighting. The **winning configuration** locked into production is:
 
 - **CatBoost Parameters**: 
