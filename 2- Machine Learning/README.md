@@ -23,7 +23,8 @@
 ```
 
 ### Data Source & ML Mechanism
-- **Data Source**: Credit card transaction stream containing cardholder demographics, timestamps, geo-coordinates (`lat`/`long`), merchant info, transaction amount (`amt`), and historical fraud labels.
+- **Data Source**: Credit card transaction stream generated via Kafka using [Sparkov_Data_Generation
+]([https://github.com](https://github.com/namebrandon/Sparkov_Data_Generation.git)) containing cardholder demographics, timestamps, geo-coordinates (`lat`/`long`), merchant info, transaction amount (`amt`), and historical fraud labels.
 
 <p align="center">
   <img src="pics/data_over.png" alt="1" width="1000"/>
