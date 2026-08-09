@@ -26,8 +26,7 @@
 - **Data Source**: Credit card transaction stream containing cardholder demographics, timestamps, geo-coordinates (`lat`/`long`), merchant info, transaction amount (`amt`), and historical fraud labels.
 
 <p align="center">
-  <img src="Fraud-detection-pipeline/2- Machine Learning
-/pics/data_over.png" alt="1" width="1000"/>
+  <img src="/pics/data_over.png" alt="1" width="900"/>
 </p>
 
 ```
@@ -148,13 +147,3 @@ The pipeline runs via two decoupled Databricks Jobs:
 </p>
 
 ---
-
-## Databricks Deployment Steps
-
-1. Upload the `src/` directory to your Databricks Workspace or connect via Git integration.
-2. **Create Retraining Job**:
-   - Type: `Python Script` $\rightarrow$ Path: `src/retraining/weekly_retrain.py`
-   - Trigger: `Schedule` (Weekly).
-3. **Create Detection Job**:
-   - Type: `Python Script` $\rightarrow$ Path: `src/scoring/realtime_detection.py`
-   - Trigger: `Continuous` (Retry Policy: Unlimited).
