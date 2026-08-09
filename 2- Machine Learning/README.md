@@ -5,7 +5,7 @@
 ## Repository Directory Structure
 
 ```
-Databricks run/
+2- Machine Learning/
 ├── config/
 │   └── pipeline_config.yaml          # Hyperparameters and path configurations
 ├── notebooks/                         # Experimental & EDA Notebooks
