@@ -26,7 +26,7 @@
 - **Data Source**: Credit card transaction stream containing cardholder demographics, timestamps, geo-coordinates (`lat`/`long`), merchant info, transaction amount (`amt`), and historical fraud labels.
 
 <p align="center">
-  <img src="/pics/data_over.png" alt="img" width="800"/>
+  <img src="/pics/data_over.png" alt="1" width="1000"/>
 </p>
 
 ```
