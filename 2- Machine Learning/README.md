@@ -98,7 +98,7 @@ is_fraud      : 0                                        >>>> is it F?
 
 ---
 
-## Execution & Production Deployment
+## Execution & Deployment
 
 The pipeline runs via two decoupled Databricks Jobs:
 
@@ -128,7 +128,7 @@ The pipeline runs via two decoupled Databricks Jobs:
 
 ---
 
-## Architecture & Execution 
+## Architecture & Flow
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
