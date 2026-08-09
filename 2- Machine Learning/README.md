@@ -35,7 +35,7 @@
 
 ### Data Source & ML Mechanism
 - **Data Source**: Credit card transaction stream generated via Kafka using [Sparkov_Data_Generation
-](https://github.com/namebrandon/Sparkov_Data_Generation.git) stored in AWS S3 Bucket as Parquet. check [data sample](/Data_Sample)
+](https://github.com/namebrandon/Sparkov_Data_Generation.git) stored in AWS S3 Bucket as Parquet. check [data sample]([/Data_Sample](https://github.com/abdelrahman134/Fraud-detection-pipeline/tree/ce2c3a0a82bd9020f6794fd89f366c75a9685235/2-%20Machine%20Learning/Data%20Sample))
 - **data contain** : cardholder demographics, timestamps, geo-coordinates (`lat`/`long`), merchant info, transaction amount (`amt`), and historical fraud labels.
 
 <p align="center">
