@@ -19,7 +19,7 @@ The Machine Learning component in **TransactSafe** is designed as a distributed,
 The pipeline processes credit card transaction streams containing temporal, geospatial, financial, and cardholder identity signals:
 
 <p align="center">
-  <img src="pics/data_over.png" alt="Transaction Data Schema & Topography" width="1000"/>
+  <img src="pics/data_over.png" alt="Transaction Data Schema & Topography" width="800"/>
 </p>
 
 
@@ -85,7 +85,7 @@ The ML pipeline decouples 24/7 continuous streaming inference from periodic mode
 > 📖 **Deep ML Documentation & Experiments**  
 > For in-depth ML specifics—including exploratory data analysis (EDA), hyperparameter tuning trials (SMOTENC vs. native weighting), CatBoost model benchmarks, and SHAP feature explainability—check the detailed ML subfolder README:  
 >  
-> ➡️ **[View Detailed Machine Learning Documentation (`./2- Machine Learning/README.md`)](./2-%20Machine%20Learning/README.md)**
+> ➡️ **[View Detailed Machine Learning Directory (`./2- Machine Learning`)](./2-%20Machine%20Learning)**
 
 ---
 
