@@ -37,22 +37,23 @@ The pipeline processes credit card transaction streams containing temporal, geos
 During live streaming execution, PySpark worker nodes execute parallel feature transformations across micro-batches before evaluating model probabilities:
 
 
-[ Incoming S3 Stream ] 
-          │
-          ▼
+```text
+                         [ Incoming S3 Stream ]
+                                   │
+                                   ▼
 ┌───────────────────────────────────────────────────────────────────────────┐
-│                    PYSPARK DISTRIBUTED WORKER NODES                       │
+│                     PYSPARK DISTRIBUTED WORKER NODES                      │
 │                                                                           │
-│  1. Vectorized Geospatial Features ──► Haversine Distance (Customer ↔ Merch)│
-│  2. Rolling Velocity Windows       ──► 1h / 24h Txn Counts & Spend Averages│
-│  3. Historical Target Encoding     ──► Broadcast Join (Category/Merchant Rate)│
+│ 1. Vectorized Geospatial Features ──► Haversine Distance (Customer ↔ Merch)│
+│ 2. Rolling Velocity Windows       ──► 1h / 24h Txn Counts & Spend Averages│
+│ 3. Historical Target Encoding     ──► Broadcast Join (Category/Merchant Rate)│
 │                                                                           │
-│  4. In-Memory MLflow UDF Scoring   ──► predict_udf(*20_features)          │
+│ 4. In-Memory MLflow UDF Scoring   ──► predict_udf(*20_features)          │
 └───────────────────────────────────────────────────────────────────────────┘
-          │
-          ▼
-[ Probability >= 0.9980 Cutoff ──► Flagged Fraud Alert Outflow ]
-
+                                   │
+                                   ▼
+          [ Probability >= 0.9980 Cutoff ──► Flagged Fraud Alert Outflow ]
+```
 
 ### 3. Databricks Orchestration Workflows
 
@@ -63,7 +64,7 @@ The ML pipeline decouples 24/7 continuous streaming inference from periodic mode
 | **Real-Time Detection** | [`realtime_detection.py`](./2-%20Machine%20Learning/src/scoring/realtime_detection.py) | **24/7 Continuous** Stream | PySpark Structured Streaming | Listens to S3 transaction streams, computes 20 features on the fly, scores rows via MLflow UDF, and outputs fraud alerts using streaming checkpoints. |
 | **Weekly Retraining** | [`weekly_retrain.py`](./2-%20Machine%20Learning/src/retraining/weekly_retrain.py) | **Weekly Cron** (Scheduled) | PySpark Batch / Pandas Driver | Retrains CatBoost on historical Delta data with champion parameters (`scale_pos_weight=5.0`, `l2_leaf_reg=15`), evaluates test metrics, and promotes new model versions in MLflow. |
 
-
+```text
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                             DATABRICKS CLOUD                                │
 │                                                                             │
