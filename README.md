@@ -85,7 +85,7 @@ The ML pipeline decouples 24/7 continuous streaming inference from periodic mode
 > 📖 **Deep ML Documentation & Experiments**  
 > For in-depth ML specifics—including exploratory data analysis (EDA), hyperparameter tuning trials (SMOTENC vs. native weighting), CatBoost model benchmarks, and SHAP feature explainability—check the detailed ML subfolder README:  
 >  
-> ➡️ **[View Detailed Machine Learning Directory (`./2- Machine Learning`)](./2-%20Machine%20Learning)**
+> ➡️ **[View Detailed Machine Learning Directory](./2-%20Machine%20Learning)**
 
 ---
 
