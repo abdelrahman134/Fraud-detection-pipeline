@@ -24,11 +24,11 @@ The pipeline processes credit card transaction streams containing temporal, geos
 
 
 ```text
-• Timestamp (trans_date + trans_time) ──► Temporal context (hour of day, day of week, month)
-• Cardholder & Geo (cc_num, lat, long)──► Who is transacting & customer location coordinates
-• Spend Amount (amt)                  ──► Financial amount spent
-• Category & Merchant (category, merch)──► Transaction category & merchant location (merch_lat, merch_long)
-• Target Label (is_fraud)             ──► Ground-truth fraud flag (0 = Legit, 1 = Fraud)
+• Timestamp (trans_date + trans_time)     ──► Temporal context (hour of day, day of week, month)
+• Cardholder & Geo (cc_num, lat, long)    ──► Who is transacting & customer location coordinates
+• Spend Amount (amt)                      ──► Financial amount spent
+• Category & Merchant (category, merch)   ──► Transaction category & merchant location (merch_lat, merch_long)
+• Target Label (is_fraud)                 ──► Ground-truth fraud flag (0 = Legit, 1 = Fraud)
 ```
 
 
@@ -62,7 +62,7 @@ The ML pipeline decouples 24/7 continuous streaming inference from periodic mode
 | Workflow Job | Script Location | Frequency / Trigger | Runtime Execution Mode | Core Responsibility |
 | :--- | :--- | :--- | :--- | :--- |
 | **Real-Time Detection** | [`realtime_detection.py`](./2-%20Machine%20Learning/src/scoring/realtime_detection.py) | **24/7 Continuous** Stream | PySpark Structured Streaming | Listens to S3 transaction streams, computes 20 features on the fly, scores rows via MLflow UDF, and outputs fraud alerts using streaming checkpoints. |
-| **Weekly Retraining** | [`weekly_retrain.py`](./2-%20Machine%20Learning/src/retraining/weekly_retrain.py) | **Weekly Cron** (Scheduled) | PySpark Batch / Pandas Driver | Retrains CatBoost on historical Delta data with champion parameters (`scale_pos_weight=5.0`, `l2_leaf_reg=15`), evaluates test metrics, and promotes new model versions in MLflow. |
+| **Weekly Retraining** | [`weekly_retrain.py`](./2-%20Machine%20Learning/src/retraining/weekly_retrain.py) | **Weekly Cron** (Scheduled) | PySpark Batch / Pandas Driver | Retrains CatBoost on historical Delta data, evaluates test metrics, and promotes new model versions in MLflow. |
 
 ```text
 ┌─────────────────────────────────────────────────────────────────────────────┐
