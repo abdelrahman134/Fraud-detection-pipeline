@@ -376,9 +376,7 @@ s3://<bucket-name>/
           └── *.parquet
 ```
 
-<p align="center">
-  <img src="pics/s3_bucket.png" alt="Amazon S3 Transaction Data" width="850"/>
-</p>
+
 
 ### Why Parquet?
 
